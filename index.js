@@ -2,6 +2,7 @@ require("dotenv").config();
 const TelegramBot = require("node-telegram-bot-api");
 const mongoose = require("mongoose");
 const path = require("path");
+const express = require("express");
 
 // MongoDB User Schema
 const userSchema = new mongoose.Schema({
@@ -26,6 +27,7 @@ mongoose
   .catch((error) => console.error("MongoDB connection error:", error));
 
 // Initialize Telegram Bot
+
 const bot = new TelegramBot(TELEGRAM_BOT_TOKEN, { polling: true });
 
 bot.onText(/\/start/, (msg) => {
@@ -98,3 +100,15 @@ bot.onText(/\/start/, (msg) => {
 
 console.log("Bot server is running...");
 
+const app = express();
+
+// Define your routes here if needed
+app.get("/", (req, res) => {
+  res.send("Bot server is running...");
+});
+
+// Start the server
+const port = 4008;
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
